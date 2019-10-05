@@ -25,29 +25,28 @@ auth.set_access_token(access_tokens[oauth], access_token_secrets[oauth])
 # Creation of the actual interface, using authentication
 api = tweepy.API(auth, retry_count=3, retry_delay=5, retry_errors=set([104, 401, 404, 500, 503]), timeout=2000, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
-screen_names = []
-
-party = sys.argv[2]
+# screen_names = []
+screen_names = [sys.argv[2]]
 
 # List of screen names to save followers for
-with open('all_'+party+'.txt', 'r') as f:
-    screen_names = f.read().splitlines()
+# with open('all_'+party+'.txt', 'r') as f:
+#     screen_names = f.read().splitlines()
 
 
 for name in screen_names:
     cursor = tweepy.Cursor(api.followers_ids, name).pages()
 
     i = 0
-    if os.path.exists(party+'/'+name+'.txt'):
+    if os.path.exists('/u/scratch/d/datduong/framing-twitter/data/PoliticianFollower2/'+name+'.txt'):
         continue
 
-    with open(name+'.txt', 'w') as f:
+    with open('/u/scratch/d/datduong/framing-twitter/data/PoliticianFollower2/'+name+'.txt', 'w') as f:
         while True:
             try:
                 page = cursor.next()
                 print (cursor.next_cursor)
-                f.write(',')
-                f.write(','.join(str(x) for x in page))
+                f.write('\n')
+                f.write('\n'.join(str(x) for x in page))
                 print (name + ' ' + str(i) + ' ' + str(oauth))
                 i += 1
             except (Timeout, ssl.SSLError, ConnectionError) : #, e:
