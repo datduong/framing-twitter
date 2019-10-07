@@ -45,6 +45,6 @@ fout.write(script)
 fout.close()
 
 os.system ("chmod 777 -R "+output)
-# os.system ("qsub -l h_data=4G,highp,h_rt=30:50:50 -pe shared 4 " + output+"submitJobs.sh" ) 
+# os.system ("qsub -l h_data=4G,highp,h_rt=40:50:50 -pe shared 3 " + output+"submitJobs.sh" ) 
 
 
